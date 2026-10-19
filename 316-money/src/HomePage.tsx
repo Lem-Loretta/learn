@@ -280,11 +280,127 @@ function Hero() {
   );
 }
 
+const LOREM =
+  "316 Money helps individuals and businesses hold, send, and receive money securely, instantly, in multiple currencies and with zero fees. Join thousands of satisfied users today.";
+
+const TRANSACTIONS = [
+  { name: "James Olawale", date: "06 Jul", time: "02:25PM", amount: "+70,256.30", currency: "NGN", positive: true },
+  { name: "Samuel Onana", date: "19 Apr", time: "04:11PM", amount: "-41,115.50", currency: "XAF", positive: false },
+];
+
+const TELCOS = [
+  { name: "MTN", bg: "#ffcc00", fg: "#000" },
+  { name: "orange", bg: "#ff7900", fg: "#fff" },
+  { name: "glo", bg: "#1ea84b", fg: "#fff" },
+  { name: "airtel", bg: "#e4202d", fg: "#fff" },
+];
+
+const BILLS = [
+  { name: "Utility", icon: "\u26A1" },
+  { name: "Internet services", icon: "\u25C9" },
+  { name: "Cable TV", icon: "\u25A3" },
+];
+
+function CurrencyField({ label, code, flag }: { label: string; code: string; flag: [string, string, string] }) {
+  return (
+    <div className="cf">
+      <span className="cf__label">{label}</span>
+      <div className="cf__box">
+        <span>0000.00</span>
+        <span className="cf__sel"><Flag colors={flag} /> {code} <Chevron /></span>
+      </div>
+    </div>
+  );
+}
+
+function FeaturesSection() {
+  return (
+    <section className="features" id="features">
+      <h2 className="features__title"><span>Features</span> you’ll Enjoy</h2>
+      <p className="features__sub">{LOREM}</p>
+
+      <div className="bento">
+        <div className="bento__row bento__row--top">
+          <article className="fcard fcard--violet fcard--send">
+            <h3>Send and receive money</h3>
+            <p>{LOREM}</p>
+            <ul className="tx">
+              {TRANSACTIONS.map((x) => (
+                <li key={x.name}>
+                  <span className="tx__icon"><Arrow size={12} /></span>
+                  <span className="tx__who"><b>{x.name}</b><small>{x.date} · {x.time}</small></span>
+                  <span className="tx__amt">
+                    <b className={x.positive ? "pos" : "neg"}>{x.amount}</b>
+                    <small>{x.currency}</small>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <div className="bento__stack">
+            <article className="fcard fcard--split">
+              <div className="fcard__text">
+                <h3>Hold &amp; exchange multiple currencies</h3>
+                <p>{LOREM}</p>
+              </div>
+              <div className="fcard__widget">
+                <CurrencyField label="Move from :" code="NGN" flag={["#008751", "#fff", "#008751"]} />
+                <CurrencyField label="Move To :" code="USD" flag={["#b22234", "#fff", "#3c3b6e"]} />
+              </div>
+            </article>
+
+            <article className="fcard fcard--split">
+              <div className="fcard__text">
+                <h3>Airtime &amp; Data Subscriptions</h3>
+                <p>{LOREM}</p>
+              </div>
+              <div className="telcos">
+                {TELCOS.map((c) => (
+                  <span key={c.name} className="telco">
+                    <i style={{ background: c.bg, color: c.fg }}>{c.name}</i>
+                  </span>
+                ))}
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div className="bento__row bento__row--bottom">
+          <article className="fcard fcard--split fcard--bills">
+            <div className="fcard__text">
+              <h3>Bill Payments</h3>
+              <p>Say goodbye to late fees and tedious bill management with our efficient bill payment feature straight from your 316 Money account.</p>
+            </div>
+            <ul className="bills">
+              {BILLS.map((b) => (
+                <li key={b.name}>
+                  <span className="bills__icon" aria-hidden>{b.icon}</span>
+                  <span><b>{b.name}</b><small>Pay your utility bills easy from your account</small></span>
+                  <Chevron />
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="fcard fcard--violet fcard--more">
+            <h3>See more of our features here</h3>
+            <button className="btn btn--ghost">Learn more</button>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   return (
     <div className="page">
       <Header />
-      <main><Hero /></main>
+      <main>
+        <Hero />
+        <FeaturesSection />
+      </main>
     </div>
   );
 }
